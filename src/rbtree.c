@@ -5,6 +5,9 @@
 rbtree *new_rbtree(void) {
   rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
   // TODO: initialize struct if needed
+  p->nil = (node_t *)calloc(1, sizeof(node_t));
+  p->nil->color = RBTREE_BLACK;
+  p->root = p->nil;
   return p;
 }
 
@@ -15,11 +18,19 @@ void delete_rbtree(rbtree *t) {
 
 node_t *rbtree_insert(rbtree *t, const key_t key) {
   // TODO: implement insert
+  t->root = (node_t *)calloc(1, (node_t *)sizeof(node_t));
+  t->root->color = RBTREE_BLACK;
+  t->root->key = key;
+  t->root->left = t->nil;
+  t->root->right = t->nil;
+  t->root->parent = t->nil;
   return t->root;
 }
 
 node_t *rbtree_find(const rbtree *t, const key_t key) {
   // TODO: implement find
+  if (t->root->key == key) return t->root;
+  else return NULL;
   return t->root;
 }
 
@@ -35,6 +46,10 @@ node_t *rbtree_max(const rbtree *t) {
 
 int rbtree_erase(rbtree *t, node_t *p) {
   // TODO: implement erase
+  if (t->root == p) {
+    free(p);
+    t->root = t->nil;
+  }
   return 0;
 }
 
