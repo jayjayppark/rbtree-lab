@@ -11,10 +11,10 @@ rbtree *new_rbtree(void) {
   return p;
 }
 
-void inOrder_delete(rbtree*t, node_t *p) {
+void postOrder_delete(rbtree*t, node_t *p) {
   if (p != t->nil) {
-    inOrder_delete(t, p->left);
-    inOrder_delete(t, p->right);
+    postOrder_delete(t, p->left);
+    postOrder_delete(t, p->right);
     free(p);
   }
 }
@@ -22,7 +22,7 @@ void inOrder_delete(rbtree*t, node_t *p) {
 void delete_rbtree(rbtree *t) {
   // TODO: reclaim the tree nodes's memory
   node_t *p = t->root;
-  inOrder_delete(t, p);
+  postOrder_delete(t, p);
   free(t->nil);
   free(t);
 }
